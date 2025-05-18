@@ -12,7 +12,7 @@ task minimap2_align {
         wget -o hs1.fa.gz ~{reference_path}
         wget -o porec.fa.gz ~{reads_path}
         minimap2 -d hs1.mmi hs1.fa
-        minimap2 -t ~{threads} -x map-ont -a ~{ref_index} ~{reads_fastq} > ~{output_prefix}.sam
+        minimap2 -t 32 -x map-ont -a hs1.mmi ~{reads_path} > ~{output_prefix}.sam
     >>>
 
     output {
