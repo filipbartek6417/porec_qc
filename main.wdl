@@ -34,7 +34,7 @@ workflow porec_qc {
     String output_prefix = "porec"
   }
 
-  call stream_and_sample {
+  call minimap2_align {
     input:
       reads_path = reads_path,
       reference_path = reference_path,
