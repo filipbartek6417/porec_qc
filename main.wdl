@@ -26,3 +26,22 @@ task minimap2_align {
         docker: "quay.io/biocontainers/minimap2:2.24--h5bf99c6_0"
     }
 }
+
+workflow porec_qc {
+  input {
+    String reads_path = "https://s3-us-west-2.amazonaws.com/human-pangenomics/submissions/5b73fa0e-658a-4248-b2b8-cd16155bc157--UCSC_GIAB_R1041_nanopore/HG002_R1041_PoreC/Dorado_v4/HG002_1_Dorado_v4_R1041_PoreC_400bps_sup.fastq.gz"
+    String reference_path = "https://hgdownload.soe.ucsc.edu/goldenPath/hs1/bigZips/hs1.fa.gz"
+    String output_prefix = "porec"
+  }
+
+  call stream_and_sample {
+    input:
+      reads_path = reads_path,
+      reference_path = reference_path,
+      output_prefix = output_prefix
+  }
+
+  output {
+    File sam = minimap2_align.sam
+  }
+}
