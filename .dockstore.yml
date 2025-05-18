@@ -1,0 +1,6 @@
+version: 1.2
+workflows:
+  - name: porec_qc
+    subclass: WDL
+    primaryDescriptorPath: /main.wdl
+    testParameterFiles: []
