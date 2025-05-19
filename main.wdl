@@ -8,7 +8,7 @@ task minimap2_align {
     }
 
     command <<<
-        apt-get update && apt-get install -y wget gzip
+        apt-get update && apt-get install -y wget minimap2
         wget -o hs1.fa.gz ~{reference_path}
         wget -o porec.fa.gz ~{reads_path}
         minimap2 -d hs1.mmi hs1.fa
@@ -23,7 +23,7 @@ task minimap2_align {
         cpu: 32
         memory: "64G"
         disks: "local-disk 300 SSD"
-        docker: "quay.io/biocontainers/minimap2:2.24--h5bf99c6_0"
+        docker: "ubuntu:latest"
     }
 }
 
