@@ -11,8 +11,8 @@ task minimap2_align {
         apt-get update && apt-get install -y wget minimap2
         wget -o hs1.fa.gz ~{reference_path}
         wget -o porec.fa.gz ~{reads_path}
-        minimap2 -d hs1.mmi hs1.fa
-        minimap2 -t 32 -x map-ont -a hs1.mmi ~{reads_path} > ~{output_prefix}.sam
+        minimap2 -d hs1.mmi hs1.fa.gz
+        minimap2 -t 32 -x map-ont -a hs1.mmi porec.fa.gz > ~{output_prefix}.sam
     >>>
 
     output {
