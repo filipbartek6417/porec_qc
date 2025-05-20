@@ -10,9 +10,8 @@ task minimap2_align {
     command <<<
         apt-get update && apt-get install -y curl minimap2
         curl -o hs1.fa.gz ~{reference_path}
-        curl -o porec.fa.gz ~{reads_path}
         minimap2 -d hs1.mmi hs1.fa.gz
-        minimap2 -t 32 -x map-ont -a hs1.mmi porec.fa.gz > ~{output_prefix}.sam
+        curl ~{reads_path} | minimap2 -t 32 -x map-ont -a hs1.mmi > ~{output_prefix}.sam
     >>>
 
     output {
