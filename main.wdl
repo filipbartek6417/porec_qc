@@ -19,7 +19,7 @@ task minimap2_align {
     runtime {
         cpu: 32
         memory: "64G"
-        disks: "local-disk 500 SSD"
+        disks: "local-disk 2000 SSD"
         docker: "ubuntu:latest"
     }
 }
