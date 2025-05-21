@@ -2,19 +2,18 @@ version 1.0
 
 task minimap2_align {
     input {
-        String reference_path
-        String reads_path
+        File reference_path
+        File reads_path
     }
 
     command <<<
-        apt-get update && apt-get install -y curl minimap2
-        curl -o hs1.fa.gz ~{reference_path}
-        curl -o porec.fa.gz ~{reads_path}
+        apt-get update && apt-get install -y minimap2
+        minimap2 -d hs1.mmi ~{reference_path}
+        minimap2 -t 32 -x map-ont -a hs1.mmi ~{reads_path} > aligned.sam
     >>>
 
     output {
-        File reference = "hs1.fa.gz"
-        File reads = "porec.fa.gz"
+        File aligned = "aligned.sam"
     }
 
     runtime {
@@ -27,8 +26,8 @@ task minimap2_align {
 
 workflow porec_qc {
   input {
-    String reads_path = "https://s3-us-west-2.amazonaws.com/human-pangenomics/submissions/5b73fa0e-658a-4248-b2b8-cd16155bc157--UCSC_GIAB_R1041_nanopore/HG002_R1041_PoreC/Dorado_v4/HG002_1_Dorado_v4_R1041_PoreC_400bps_sup.fastq.gz"
-    String reference_path = "https://hgdownload.soe.ucsc.edu/goldenPath/hs1/bigZips/hs1.fa.gz"
+    String reads_path = "gs://fc-c3eed389-0be2-4bbc-8c32-1a40b8696969/submissions/bd394ffa-b4db-4031-81d6-8bf319b60390/porec_qc/3aa79ef5-c067-4d32-a29a-32fa5c9c378e/call-minimap2_align/porec.fa.gz"
+    String reference_path = "gs://fc-c3eed389-0be2-4bbc-8c32-1a40b8696969/submissions/bd394ffa-b4db-4031-81d6-8bf319b60390/porec_qc/3aa79ef5-c067-4d32-a29a-32fa5c9c378e/call-minimap2_align/hs1.fa.gz"
   }
 
   call minimap2_align {
@@ -38,7 +37,6 @@ workflow porec_qc {
   }
 
   output {
-    File reference = minimap2_align.reference
-    File reads = minimap2_align.reads
+    File aligned = minimap2_align.aligned
   }
 }
