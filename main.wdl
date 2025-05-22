@@ -9,7 +9,7 @@ task minimap2_align {
     command <<<
         apt-get update && apt-get install -y minimap2
         minimap2 -d hs1.mmi ~{reference_path}
-        minimap2 -t 32 -x map-ont -k13 -Y -a hs1.mmi ~{reads_path} > aligned.sam
+        minimap2 -t 32 -x map-ont -a hs1.mmi ~{reads_path} > aligned.sam
     >>>
 
     output {
@@ -18,7 +18,7 @@ task minimap2_align {
 
     runtime {
         cpu: 32
-        memory: "100G"
+        memory: "64G"
         disks: "local-disk 2000 SSD"
         docker: "ubuntu:latest"
     }
